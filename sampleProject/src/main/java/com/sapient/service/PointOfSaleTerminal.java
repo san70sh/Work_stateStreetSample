@@ -18,7 +18,7 @@ public class PointOfSaleTerminal {
 
 	public void loadPrices() {
 		String fileRow = "";
-		File priceList = new File("D:\\VK\\sampleProject\\src\\main\\resources\\pricing.txt");
+		File priceList = new File("../sampleProject/src/main/resources/pricing.txt");
 		
 		BufferedReader br = null;
 		try {
@@ -69,18 +69,20 @@ public class PointOfSaleTerminal {
 	}
 
 	private float updatePrice(Map<String, Product> orderList, String nextProduct) {
+		
+		
 		if(orderList.get(nextProduct).getQty() - orderList.get(nextProduct).getCount() > 1) {
-			orderList.get(nextProduct).updateCount(false);
+			orderList.get(nextProduct).setCount(orderList.get(nextProduct).getCount()+1);
 			return orderList.get(nextProduct).getUnitPrice();
 		} else {
 			if (orderList.get(nextProduct).getVolume().equals("V")){
 				float corr = orderList.get(nextProduct).getVolPrice() - orderList.get(nextProduct).getCount() * orderList.get(nextProduct).getUnitPrice();
-				orderList.get(nextProduct).updateCount(true);
+				orderList.get(nextProduct).setCount(0);
 				return corr;
 			} else {
 				if(orderList.get(nextProduct).getQty() - orderList.get(nextProduct).getCount() == 1){
 					float corr = orderList.get(nextProduct).getQty() * orderList.get(nextProduct).getUnitPrice() - orderList.get(nextProduct).getCount() * orderList.get(nextProduct).getUnitPrice();
-					orderList.get(nextProduct).updateCount(false);
+					orderList.get(nextProduct).setCount(orderList.get(nextProduct).getCount()+1);
 					return corr;
 			}
 				else {
