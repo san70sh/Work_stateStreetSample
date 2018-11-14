@@ -16,7 +16,7 @@ public class PointOfSaleTerminal {
 	Product product;
 	Map<String, Product> productMap = new HashMap<String, Product>();
 
-	public void loadPrices() {
+	public Map<String, Product> loadPrices() {
 		String fileRow = "";
 		File priceDetails = new File("../sampleProject/src/main/resources/pricing.txt");
 
@@ -41,6 +41,10 @@ public class PointOfSaleTerminal {
 					productMap.put(productdetails.get(0), product);
 				}
 			}
+			
+//			productMap.entrySet().forEach(System.out::println);
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -52,10 +56,11 @@ public class PointOfSaleTerminal {
 
 			}
 		}
+		return productMap;
 
 	}
 
-	public void scan(String nextProduct) {
+	public float scan(String nextProduct) {
 		if (productMap.get(nextProduct) == null) {
 			System.out.println("Product does not exist.");
 		} else {
@@ -64,6 +69,7 @@ public class PointOfSaleTerminal {
 			System.out.printf("Current bill is $%.2f", totalPrice);
 			System.out.println();
 		}
+		return totalPrice;
 
 	}
 
